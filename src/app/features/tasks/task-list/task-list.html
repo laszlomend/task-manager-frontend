@@ -1,0 +1,56 @@
+<div class="page">
+  <div class="page-header">
+    <h1>My Tasks</h1>
+    <a class="btn-primary" routerLink="/tasks/new">+ New Task</a>
+  </div>
+
+  <div class="filter-bar">
+    <label for="status-filter">Filter by status</label>
+    <select id="status-filter" (change)="onFilterChange($any($event.target).value)">
+      <option value="">All</option>
+      <option value="TODO">To Do</option>
+      <option value="IN_PROGRESS">In Progress</option>
+      <option value="DONE">Done</option>
+    </select>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="form-error">{{ errorMessage() }}</p>
+  }
+
+  @if (isLoading()) {
+    <p class="muted">Loading…</p>
+  } @else if (tasks().length === 0) {
+    <p class="muted">No tasks to show.</p>
+  } @else {
+    <ul class="task-list">
+      @for (task of tasks(); track task.id) {
+        <li class="task-card">
+          <div class="task-main">
+            <select
+              class="status-select"
+              [attr.data-status]="task.status"
+              [value]="task.status"
+              (change)="changeStatus(task, $any($event.target).value)"
+            >
+              @for (status of statuses; track status) {
+                <option [value]="status">{{ statusLabels[status] }}</option>
+              }
+            </select>
+            <h2>{{ task.title }}</h2>
+            @if (task.description) {
+              <p class="description">{{ task.description }}</p>
+            }
+            @if (task.dueDate) {
+              <p class="due-date">Due: {{ task.dueDate | date: 'yyyy-MM-dd HH:mm' }}</p>
+            }
+          </div>
+          <div class="task-actions">
+            <a [routerLink]="['/tasks', task.id, 'edit']">Edit</a>
+            <button type="button" (click)="deleteTask(task)">Delete</button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>

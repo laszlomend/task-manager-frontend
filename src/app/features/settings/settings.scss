@@ -1,0 +1,6 @@
+@use '../../shared/page';
+
+.status-connected {
+  color: var(--color-success);
+  font-weight: 600;
+}

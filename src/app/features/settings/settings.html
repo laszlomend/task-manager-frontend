@@ -1,0 +1,38 @@
+<div class="page">
+  <h1>Settings</h1>
+
+  @if (successMessage()) {
+    <p class="banner-success">{{ successMessage() }}</p>
+  }
+  @if (errorMessage()) {
+    <p class="banner-error">{{ errorMessage() }}</p>
+  }
+
+  @if (isLoading()) {
+    <p class="muted">Loading…</p>
+  } @else {
+    <section class="card">
+      <h2>Google Calendar</h2>
+
+      @if (me()?.googleConnected) {
+        <p class="status-connected">✓ Connected</p>
+        <p class="muted">
+          Tasks with a due date automatically get a matching event in your Google Calendar.
+        </p>
+      } @else {
+        <p class="muted">
+          Connect your Google account so tasks with a due date automatically sync to your Google
+          Calendar.
+        </p>
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="isConnecting()"
+          (click)="connectGoogleCalendar()"
+        >
+          {{ isConnecting() ? 'Redirecting…' : 'Connect Google Calendar' }}
+        </button>
+      }
+    </section>
+  }
+</div>

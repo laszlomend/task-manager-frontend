@@ -1,0 +1,39 @@
+<div class="page form-page">
+  <h1>{{ isEditMode ? 'Edit Task' : 'New Task' }}</h1>
+
+  @if (isLoading()) {
+    <p class="muted">Loading…</p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" />
+      @if (form.controls.title.invalid && form.controls.title.touched) {
+        <p class="field-error">Title is required.</p>
+      }
+
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="4"></textarea>
+
+      <label for="dueDate">Due date</label>
+      <input id="dueDate" type="datetime-local" formControlName="dueDate" />
+
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="TODO">To Do</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="DONE">Done</option>
+      </select>
+
+      @if (errorMessage()) {
+        <p class="form-error">{{ errorMessage() }}</p>
+      }
+
+      <div class="form-actions">
+        <a routerLink="/tasks" class="btn-secondary">Cancel</a>
+        <button type="submit" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Saving…' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
