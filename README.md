@@ -5,6 +5,10 @@ Angular frontend for [task-manager-api](https://github.com/laszlomend/task-manag
 half of a portfolio project; see the backend repo's README for the fuller pitch and the
 live Swagger API docs.
 
+**[Try it live](https://task-manager-frontend-beryl-ten.vercel.app)** — register an
+account and use it directly. The backend runs on Render's free tier, so the first
+request after a period of inactivity can take 30-50s to wake up (cold start).
+
 ## What it does
 
 - **Auth** — register/login, JWT access + refresh tokens with an automatic
