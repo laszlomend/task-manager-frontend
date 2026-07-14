@@ -1,59 +1,51 @@
-# TaskManagerFrontend
+# Task Manager Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+Angular frontend for [task-manager-api](https://github.com/laszlomend/task-manager-api)
+— a JWT-authenticated task manager with a Google Calendar connect flow. Built as the UI
+half of a portfolio project; see the backend repo's README for the fuller pitch and the
+live Swagger API docs.
 
-## Development server
+## What it does
 
-To start a local development server, run:
+- **Auth** — register/login, JWT access + refresh tokens with an automatic
+  refresh-and-retry on `401` (see `core/interceptors/auth.interceptor.ts`), route
+  guarding for authenticated-only pages.
+- **Task management** — create, edit, delete tasks; filter by status; change a task's
+  status inline from the list (no need to open the full edit form for a one-field
+  change).
+- **Google Calendar connect** — a Settings page with a "Connect Google Calendar" button
+  that starts the backend's OAuth2 flow and reports back connection status.
 
-```bash
-ng serve
-```
+## Tech stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Angular 21, standalone components (no `NgModule`s), signals for reactive state, SCSS,
+Angular Router, Vitest as the test runner.
 
-## Code scaffolding
+## Getting started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+The backend ([task-manager-api](https://github.com/laszlomend/task-manager-api)) needs
+to be running first — this app expects it at `http://localhost:3000` in development
+(see `src/environments/environment.development.ts`).
 
 ```bash
-ng build
+npm install
+npm start   # ng serve — http://localhost:4200
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
 ```bash
-ng test
+npm test    # Vitest, via the Angular CLI's builder
+npm run build
 ```
 
-## Running end-to-end tests
+## Project structure
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+src/app/
+  core/         # models, services (auth/task/google), interceptor, route guard
+  features/     # auth (login/register), tasks (list/form), settings (Google connect)
+  layout/       # header/nav
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## License
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
